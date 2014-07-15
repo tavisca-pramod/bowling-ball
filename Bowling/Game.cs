@@ -17,6 +17,9 @@ namespace Bowling
         private int strikeCounter = 0;
         private int spareCounter = 0;
 
+        private readonly int MAX_ROLL_COUNT_FOR_SPARE_COUNTER = 19;
+        private readonly int MAX_ROLL_COUNT_FOR_STRIKE_COUNTER = 10;
+
 
         public void Roll(int pins)
         {
@@ -69,7 +72,7 @@ namespace Bowling
 
         private void UpdateStrikeCounter(int pins)
         {
-            if (pins == 10 && rollCounter < 10)
+            if (pins == 10 && rollCounter < MAX_ROLL_COUNT_FOR_STRIKE_COUNTER)
             {
                 strikeCounter += 2;
                 rollCounter++;
@@ -78,7 +81,7 @@ namespace Bowling
 
         private void UpdateSpareCounter(Roll currentRoll)
         {
-            if (rollCounter % 2 == 1 && rollCounter < 19)
+            if (rollCounter % 2 == 1 && rollCounter < MAX_ROLL_COUNT_FOR_SPARE_COUNTER)
             {
                 int frameScore = currentRoll.RollScore
                         + ScorePerRoll[currentRollIndex - 2].RollScore;

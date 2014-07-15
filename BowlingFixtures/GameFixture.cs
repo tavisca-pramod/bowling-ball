@@ -8,9 +8,7 @@ namespace BowlingFixtures
     public class GameFixture
     {
         public Game game;
-        public int strike = 0;
-        public int Spare = 0;
-
+       
         [TestInitialize]
         public void init()
         {
@@ -27,9 +25,7 @@ namespace BowlingFixtures
         public void CheckUpdatedScoreAfterFirstRoll()
         {
             int numberOfPinsHit = 4;
-
             game.Roll(numberOfPinsHit);
-
             Assert.AreEqual(4, game.GetScore());
         }
 
@@ -74,8 +70,9 @@ namespace BowlingFixtures
         public void CheckUpdatedScoresForAllStrike()
         {
             int numberOfPinsHitOnFirstRoll = 10;
+            int MAX_ROLL_COUNT_FOR_ALL_STRIKE = 12;
 
-            for (int i = 1; i <= 12; i++)
+            for (int i = 1; i <= MAX_ROLL_COUNT_FOR_ALL_STRIKE; i++)
             {
                 game.Roll(numberOfPinsHitOnFirstRoll);
             }
@@ -87,8 +84,9 @@ namespace BowlingFixtures
         public void CheckUpdatedScoresForAllSpare()
         {
             int numberOfPinsHitOnFirstRoll = 5;
+            int MAX_ROLL_COUNT_FOR_ALL_SPARE= 21;
 
-            for (int i = 1; i <= 21; i++)
+            for (int i = 1; i <= MAX_ROLL_COUNT_FOR_ALL_SPARE; i++)
             {
                 game.Roll(numberOfPinsHitOnFirstRoll);
             }
