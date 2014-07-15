@@ -53,6 +53,12 @@
     <Compile Include="GameFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Bowling\Bowling.csproj">
+      <Project>{59948822-5b73-4101-ad2f-244a7f311fc3}</Project>
+      <Name>Bowling</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
