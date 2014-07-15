@@ -11,14 +11,16 @@ namespace BowlingFixtures
         public int strike = 0;
         public int Spare = 0;
 
-        // roll(int pins)
-        // update roll list 
-        // get the current score and add the current roll
-        
         [TestInitialize]
         public void init()
         {
             game = new Game();
+        }
+
+        [TestCleanup]
+        public void CleanUp()
+        {
+            game = null;
         }
 
         [TestMethod]
@@ -28,7 +30,7 @@ namespace BowlingFixtures
 
             game.Roll(numberOfPinsHit);
 
-            Assert.AreEqual(4,game.GetScore());
+            Assert.AreEqual(4, game.GetScore());
         }
 
         [TestMethod]
@@ -72,13 +74,26 @@ namespace BowlingFixtures
         public void CheckUpdatedScoresForAllStrike()
         {
             int numberOfPinsHitOnFirstRoll = 10;
-           
-            for(int i=1;i <= 12; i++)
+
+            for (int i = 1; i <= 12; i++)
             {
                 game.Roll(numberOfPinsHitOnFirstRoll);
             }
-            int result =game.GetScore();
+            int result = game.GetScore();
             Assert.AreEqual(300, game.GetScore());
+        }
+
+        [TestMethod]
+        public void CheckUpdatedScoresForAllSpare()
+        {
+            int numberOfPinsHitOnFirstRoll = 5;
+
+            for (int i = 1; i <= 21; i++)
+            {
+                game.Roll(numberOfPinsHitOnFirstRoll);
+            }
+            int result = game.GetScore();
+            Assert.AreEqual(150, game.GetScore());
         }
     }
 }
