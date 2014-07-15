@@ -81,13 +81,16 @@ namespace Bowling
 
         private void UpdateSpareCounter(Roll currentRoll)
         {
-            if (rollCounter % 2 == 1 && rollCounter < MAX_ROLL_COUNT_FOR_SPARE_COUNTER)
+            if (rollCounter % 2 == 1)
             {
-                int frameScore = currentRoll.RollScore
-                        + ScorePerRoll[currentRollIndex - 2].RollScore;
-                if (frameScore == 10)
+                if (rollCounter < MAX_ROLL_COUNT_FOR_SPARE_COUNTER)
                 {
-                    spareCounter = 1;
+                    int frameScore = currentRoll.RollScore
+                            + ScorePerRoll[currentRollIndex - 2].RollScore;
+                    if (frameScore == 10)
+                    {
+                        spareCounter = 1;
+                    }
                 }
             }
         }
@@ -102,12 +105,7 @@ namespace Bowling
         private void UpdateScoreByBonus()
         {
             if (ScorePerRoll[ScorePerRoll.Count - 1].Bonus)
-            {
-                if (spareCounter != 0)
-                {
-                    totalScore += ScorePerRoll[ScorePerRoll.Count - 1].RollScore;
-                }
-                else
+            {   
                 {
                     UpdateScoreByStrikeBonus();
                 }

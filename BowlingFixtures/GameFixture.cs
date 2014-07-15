@@ -93,5 +93,19 @@ namespace BowlingFixtures
             int result = game.GetScore();
             Assert.AreEqual(150, game.GetScore());
         }
+
+        [TestMethod]
+        public void CheckUpdatedScoresOtherThanStrikeOrSpare()
+        {
+            int numberOfPinsHitOnFirstRoll = 4;
+            int MAX_ROLL_COUNT_FOR_ALL_SPARE = 20;
+
+            for (int i = 1; i <= MAX_ROLL_COUNT_FOR_ALL_SPARE; i++)
+            {
+                game.Roll(numberOfPinsHitOnFirstRoll);
+            }
+            int result = game.GetScore();
+            Assert.AreEqual(80, game.GetScore());
+        }
     }
 }
