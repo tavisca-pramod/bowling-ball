@@ -9,19 +9,19 @@ namespace Bowling
     public class Game
     {
         List<Roll> ScorePerRoll = new List<Roll>();
-      
-        private int score = 0;
-        private int currentRollIndex = 1;
-        private int rollCount = 0;
 
-        private int strike = 0;
-        private int spare = 0;
+        private int totalScore = 0;
+        private int currentRollIndex = 1;
+        private int rollCounter = 0;
+
+        private int strikeCounter = 0;
+        private int spareCounter = 0;
 
 
         public void Roll(int pins)
         {
             ScorePerRoll.Add(GetRoll(pins));
-          
+
             UpdateScore();
         }
 
@@ -31,73 +31,106 @@ namespace Bowling
 
             currentRoll.RollScore = pins;
 
-            if (strike > 0 || spare > 0)
+            if (strikeCounter > 0 || spareCounter > 0)
             {
                 currentRoll.Bonus = true;
-                if (spare > 0)
-                    spare--;
+                if (spareCounter > 0)
+                    spareCounter--;
 
                 UpdateSpareStrikeCounter(pins, currentRoll);
             }
-            else 
+            else
             {
                 UpdateSpareStrikeCounter(pins, currentRoll);
             }
-            currentRollIndex++;
-            rollCount++;
+
+            UpdateCounters();
+
             return currentRoll;
+        }
+
+        private void UpdateCounters()
+        {
+            currentRollIndex++;
+            rollCounter++;
         }
 
         private void UpdateSpareStrikeCounter(int pins, Roll currentRoll)
         {
-            if (rollCount == 0 || rollCount % 2 == 0)
+            if (rollCounter == 0 || rollCounter % 2 == 0)
             {
-                if (pins == 10 && rollCount < 10)
-                {
-                    strike += 2;
-                    rollCount++;
-                }
+                UpdateStrikeCounter(pins);
             }
             else
             {
-                if (rollCount % 2 == 1 && rollCount < 10)
+                UpdateSpareCounter(currentRoll);
+            }
+        }
+
+        private void UpdateStrikeCounter(int pins)
+        {
+            if (pins == 10 && rollCounter < 10)
+            {
+                strikeCounter += 2;
+                rollCounter++;
+            }
+        }
+
+        private void UpdateSpareCounter(Roll currentRoll)
+        {
+            if (rollCounter % 2 == 1 && rollCounter < 19)
+            {
+                int frameScore = currentRoll.RollScore
+                        + ScorePerRoll[currentRollIndex - 2].RollScore;
+                if (frameScore == 10)
                 {
-                    int frameScore = currentRoll.RollScore
-                            + ScorePerRoll[currentRollIndex - 2].RollScore;
-                    if (frameScore == 10)
-                    {
-                        spare = 1;
-                    }
+                    spareCounter = 1;
                 }
             }
         }
 
         private void UpdateScore()
         {
-            score += ScorePerRoll[ScorePerRoll.Count - 1].RollScore;
-            
+            totalScore += ScorePerRoll[ScorePerRoll.Count - 1].RollScore;
+
+            UpdateScoreByBonus();
+        }
+
+        private void UpdateScoreByBonus()
+        {
             if (ScorePerRoll[ScorePerRoll.Count - 1].Bonus)
             {
-
-                if (strike <= 2)
+                if (spareCounter != 0)
                 {
-                    score += ScorePerRoll[ScorePerRoll.Count - 1].RollScore;
-                    strike--;
+                    totalScore += ScorePerRoll[ScorePerRoll.Count - 1].RollScore;
                 }
-             
-                while (strike > 2)
+                else
                 {
-                    score += ScorePerRoll[ScorePerRoll.Count - 1].RollScore*2 ;
-                    strike--;
+                    UpdateScoreByStrikeBonus();
                 }
             }
-            
+        }
 
+        private void UpdateScoreByStrikeBonus()
+        {
+            if (strikeCounter <= 2)
+            {
+                totalScore += ScorePerRoll[ScorePerRoll.Count - 1].RollScore;
+                strikeCounter--;
+            }
+            else
+            {
+                while (strikeCounter > 2)
+                {
+                    totalScore += ScorePerRoll[ScorePerRoll.Count - 1].RollScore * 2;
+                    strikeCounter--;
+                }
+            }
         }
 
         public int GetScore()
         {
-            return score;
+            return totalScore;
         }
 
     }
