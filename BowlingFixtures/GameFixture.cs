@@ -7,26 +7,26 @@ namespace BowlingFixtures
     [TestClass]
     public class GameFixture
     {
-        public Game game;
+        private Game _game;
        
         [TestInitialize]
         public void init()
         {
-            game = new Game();
+            _game = new Game();
         }
 
         [TestCleanup]
         public void CleanUp()
         {
-            game = null;
+            _game = null;
         }
 
         [TestMethod]
         public void CheckUpdatedScoreAfterFirstRoll()
         {
             int numberOfPinsHit = 4;
-            game.Roll(numberOfPinsHit);
-            Assert.AreEqual(4, game.GetScore());
+            _game.Roll(numberOfPinsHit);
+            Assert.AreEqual(4, _game.GetScore());
         }
 
         [TestMethod]
@@ -34,10 +34,10 @@ namespace BowlingFixtures
         {
             int numberOfPinsHitOnFirstRoll = 4;
             int numberOfPinsHitOnSecondRoll = 3;
-            game.Roll(numberOfPinsHitOnFirstRoll);
-            game.Roll(numberOfPinsHitOnSecondRoll);
+            _game.Roll(numberOfPinsHitOnFirstRoll);
+            _game.Roll(numberOfPinsHitOnSecondRoll);
 
-            Assert.AreEqual(7, game.GetScore());
+            Assert.AreEqual(7, _game.GetScore());
         }
 
         [TestMethod]
@@ -46,11 +46,11 @@ namespace BowlingFixtures
             int numberOfPinsHitOnFirstRoll = 4;
             int numberOfPinsHitOnSecondRoll = 6;
             int numberOfPinsHitOnThirdRoll = 3;
-            game.Roll(numberOfPinsHitOnFirstRoll);
-            game.Roll(numberOfPinsHitOnSecondRoll);
-            game.Roll(numberOfPinsHitOnThirdRoll);
+            _game.Roll(numberOfPinsHitOnFirstRoll);
+            _game.Roll(numberOfPinsHitOnSecondRoll);
+            _game.Roll(numberOfPinsHitOnThirdRoll);
 
-            Assert.AreEqual(16, game.GetScore());
+            Assert.AreEqual(16, _game.GetScore());
         }
 
         [TestMethod]
@@ -59,11 +59,11 @@ namespace BowlingFixtures
             int numberOfPinsHitOnFirstRoll = 10;
             int numberOfPinsHitOnSecondRoll = 6;
             int numberOfPinsHitOnThirdRoll = 3;
-            game.Roll(numberOfPinsHitOnFirstRoll);
-            game.Roll(numberOfPinsHitOnSecondRoll);
-            game.Roll(numberOfPinsHitOnThirdRoll);
+            _game.Roll(numberOfPinsHitOnFirstRoll);
+            _game.Roll(numberOfPinsHitOnSecondRoll);
+            _game.Roll(numberOfPinsHitOnThirdRoll);
 
-            Assert.AreEqual(28, game.GetScore());
+            Assert.AreEqual(28, _game.GetScore());
         }
 
         [TestMethod]
@@ -74,10 +74,10 @@ namespace BowlingFixtures
 
             for (int i = 1; i <= MAX_ROLL_COUNT_FOR_ALL_STRIKE; i++)
             {
-                game.Roll(numberOfPinsHitOnFirstRoll);
+                _game.Roll(numberOfPinsHitOnFirstRoll);
             }
-            int result = game.GetScore();
-            Assert.AreEqual(300, game.GetScore());
+            int result = _game.GetScore();
+            Assert.AreEqual(300, _game.GetScore());
         }
 
         [TestMethod]
@@ -88,10 +88,10 @@ namespace BowlingFixtures
 
             for (int i = 1; i <= MAX_ROLL_COUNT_FOR_ALL_SPARE; i++)
             {
-                game.Roll(numberOfPinsHitOnFirstRoll);
+                _game.Roll(numberOfPinsHitOnFirstRoll);
             }
-            int result = game.GetScore();
-            Assert.AreEqual(150, game.GetScore());
+            int result = _game.GetScore();
+            Assert.AreEqual(150, _game.GetScore());
         }
 
         [TestMethod]
@@ -102,10 +102,10 @@ namespace BowlingFixtures
 
             for (int i = 1; i <= MAX_ROLL_COUNT_FOR_ALL_SPARE; i++)
             {
-                game.Roll(numberOfPinsHitOnFirstRoll);
+                _game.Roll(numberOfPinsHitOnFirstRoll);
             }
-            int result = game.GetScore();
-            Assert.AreEqual(80, game.GetScore());
+            int result = _game.GetScore();
+            Assert.AreEqual(80, _game.GetScore());
         }
     }
 }
